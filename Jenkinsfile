@@ -1,7 +1,6 @@
 #!/usr/bin/env groovy
 
 node('master') {
-  cleanWs()
   stage('checkout') {
     checkout scm
   }
