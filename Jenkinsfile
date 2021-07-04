@@ -25,7 +25,14 @@ node('master') {
   }
   stage('CODE QUALITY: ESLint') {
     sh 'npm run lint || exit 0'
-    publishHTMLReport('reports/eslint/', 'index.html', 'HTML Report')
+    publishHTML(target: [
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : 'reports/eslint/',
+      reportFiles          : 'index.html',
+      reportName           : 'Code Quality: ESLint'
+    ])
   }
   stage('CODE DUPLICASY: jscpd') {
     sh 'npm run cpd || exit 0'
