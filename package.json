@@ -14,10 +14,12 @@
     "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
     "test:e2e": "node test/run-e2e-test.js",
     "test:e2e:dev": "node test/run-e2e-test.js --dev",
-    "test:integration": "jest test/integration",
+    "test:integration": "jest --coverage test/integration",
     "test:integration:watch": "jest test/integration --watch",
-    "test:unit": "jest test/unit",
-    "test:unit:watch": "jest test/unit --watch"
+    "test:unit": "jest --coverage test/unit",
+    "test:unit:watch": "jest test/unit --watch",
+    "owasp": "owasp-dependency-check --project . -f HTML JSON",
+    "cpd": "jscpd -r html --ignore 'node_modules/**' ./**/*"
   },
   "engines": {
     "node": ">=8.9.3"
@@ -29,6 +31,7 @@
     "dotenv": "^5.0.0",
     "execa": "^0.9.0",
     "express": "^4.16.2",
+    "gulp-webpack": "^1.5.0",
     "helmet": "^3.11.0",
     "lodash": "^4.17.5",
     "marked": "^0.3.16",
@@ -45,8 +48,14 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "jest": "^22.4.0",
+    "jscpd": "^3.3.26",
     "nodemon": "^1.18.9",
+    "owasp-dependency-check": "^0.0.18",
     "supertest": "^3.0.0",
     "yargs": "^11.0.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": ["clover"]
   }
 }
