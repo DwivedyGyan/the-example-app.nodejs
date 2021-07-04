@@ -15,17 +15,6 @@ def publishHTMLReport(reportDir, file, reportName) {
   }
 }
 
-publishHTML(
-  [
-    allowMissing: false,
-    alwaysLinkToLastBuild: false,
-    keepAll: false,
-    reportDir: 'coverage/',
-    reportFiles: 'index.html',
-    reportName: 'HTML Report',
-    reportTitles: 'page title'
-  ]
-)
 
 node('master') {
   stage('checkout') {
