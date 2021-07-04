@@ -3,22 +3,7 @@
 cleanWs()
 node('master') {
   stage('checkout') {
-    checkout(
-      [
-        $class: 'GitSCM',
-        branches: [
-          [
-            name: '*/master'
-          ]
-        ],
-        extensions: [],
-        userRemoteConfigs: [
-          [
-            url: 'https://github.com/DwivedyGyan/the-example-app.nodejs.git'
-          ]
-        ]
-      ]
-    )
+    checkout scm
   }
   stage('NPM: Installing dependencies') {
     sh 'npm install'
