@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def coverage_report_path = "covera"
-
+/*
 def publishHTMLReport(reportDir, file, reportName) {
   if (fileExists("${reportDir}/${file}")) {
     publishHTML(target: [
@@ -14,7 +14,7 @@ def publishHTMLReport(reportDir, file, reportName) {
     ])
   }
 }
-
+*/
 
 node('master') {
   stage('checkout') {
@@ -36,18 +36,46 @@ node('master') {
   }
   stage('CODE DUPLICASY: jscpd') {
     sh 'npm run cpd || exit 0'
-    publishHTMLReport('report/html/', 'index.html', 'HTML Report')
+    publishHTML(target: [
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : 'report/html/',
+      reportFiles          : 'index.html',
+      reportName           : 'Code Duplicasy: jscpd'
+    ])
   }
   stage('BUG Scanning: OWASP Dependency-Check') {
     sh 'npm run owasp || exit 0'
-    publishHTMLReport('dependency-check-report/', 'dependency-check-report.html', 'HTML Report')
+    publishHTML(target: [
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : 'dependency-check-report/',
+      reportFiles          : 'dependency-check-report.html',
+      reportName           : 'Bug Scanning: OWASP'
+    ])
   }
   stage('UNIT Testing: jest') {
     sh 'npm run test:unit || exit 0'
-    publishHTMLReport('coverage/', 'index.html', 'HTML Report')
+    publishHTML(target: [
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : 'coverage/',
+      reportFiles          : 'index.html',
+      reportName           : 'Unit Testing: Jest'
+    ])
   }
   stage('INTEGRATION Testing: jest') {
     sh 'npm run test:integration || exit 0'
-    publishHTMLReport('coverage/', 'index.html', 'HTML Report')
+    publishHTML(target: [
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : 'coverage/',
+      reportFiles          : 'index.html',
+      reportName           : 'Integration Testing: Jest'
+    ])
   }
 }
