@@ -24,7 +24,7 @@ node('master') {
     sh 'npm install'
   }
   stage('CODE QUALITY: ESLint') {
-    sh 'npm run lint'
+    sh 'npm run lint || exit 0'
     publishHTMLReport('reports/eslint/', 'index.html', 'HTML Report')
   }
   stage('CODE DUPLICASY: jscpd') {
